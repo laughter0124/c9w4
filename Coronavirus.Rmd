@@ -1,0 +1,48 @@
+---
+title: "Coronavirus Disease 2019 (COVID-19) in the U.S."
+author: "Qian Xu"
+date: "March 6, 2020"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Background
+
+To track an outbreak of respiratory disease caused by a novel (new) coronavirus that was first detected in China and which has now been detected in almost 70 locations internationally, including in the United States. The virus has been named “SARS-CoV-2” and the disease it causes has been named “coronavirus disease 2019” (abbreviated “COVID-19”).
+
+## Data
+
+The cumulative data came from https://coronavirus.1point3acres.com/en.  From these data, we can calculate the new cases day by day to track the spread of the disease.
+
+```{r}
+        dates <- c(as.Date("2/13/20", format = "%m/%d/%y"):as.Date("3/5/20", format = "%m/%d/%y"))
+        dates <- as.Date(dates, origin = "1970-01-01")
+        cases <- c(15, 15, 15, 15, 15, 16, 16, 17, 35, 35, 35, 53, 57, 60, 60, 66, 71, 91, 107, 130, 162, 234)
+        COVID <- data.frame(dates, cases)
+```
+
+```{r, echo=TRUE, comment=""}
+head(COVID)
+```
+
+## Figure
+
+This figure tracks both the cumulative cases and the new cases by dates.
+```{r}
+plot(COVID, xlab = "date", ylab = "cases", bty = "n", pch = 16, ylim = c(0, 250))
+lines(COVID, type = "l", col = "blue", lwd = 2)
+new<-cases-cases[c(1, 1:21)]
+points(dates, new, bty="n", pch=10)
+lines(dates, new, type="l", col = "red", lwd = 2)
+legend("topleft", c("new cases", "cumulative cases"), pch = 16, col = c("red", "blue"), bty = c("n", "o"), cex = 1.2)
+```
+
+## New Cases
+
+We focused on new cases everyday from both the calculated data and the figure.  We can easily figure out that the disease is spreading rapidly recently.
+```{r, echo=TRUE, comment=""}
+new
+```
